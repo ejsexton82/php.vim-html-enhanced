@@ -1,0 +1,655 @@
+Given php (p-block):
+  <p>
+  Some Text
+  </p>
+
+Do (indent p-block):
+  =ap
+
+Expect php (indented p-block):
+  <p>
+      Some Text
+  </p>
+
+Given php (if-block):
+  <?php
+      if ($this) {
+      // Do something
+      }
+
+Do (indent if-block):
+  =ap
+
+Expect php (indented if-block):
+  <?php
+  if ($this) {
+      // Do something
+  }
+
+Given php (psr-2 example):
+  <?php
+  namespace Vendor\Package;
+
+  use FooInterface;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  class Foo extends Bar implements FooInterface
+  {
+  public function sampleMethod($a, $b = null)
+  {
+  if ($a === $b) {
+  bar();
+  } elseif ($a > $b) {
+  $foo->bar($arg1);
+  } else {
+  BazClass::bar($arg2, $arg3);
+  }
+  }
+
+  final public static function bar()
+  {
+  // method body
+  }
+  }
+
+Do (indent psr-2 example):
+  gg=G
+
+Expect php (indented psr-2 example):
+  <?php
+  namespace Vendor\Package;
+
+  use FooInterface;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  class Foo extends Bar implements FooInterface
+  {
+      public function sampleMethod($a, $b = null)
+      {
+          if ($a === $b) {
+              bar();
+          } elseif ($a > $b) {
+              $foo->bar($arg1);
+          } else {
+              BazClass::bar($arg2, $arg3);
+          }
+      }
+
+      final public static function bar()
+      {
+          // method body
+      }
+  }
+
+Given php (psr-2 implements):
+  <?php
+  namespace Vendor\Package;
+
+  use FooClass;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  class ClassName extends ParentClass implements
+  \ArrayAccess,
+  \Countable,
+  \Serializable
+  {
+  // constants, properties, methods
+  }
+
+Do (indent psr-2 implements):
+  gg=G
+
+Expect php (indented psr-2 implements):
+  <?php
+  namespace Vendor\Package;
+
+  use FooClass;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  class ClassName extends ParentClass implements
+      \ArrayAccess,
+      \Countable,
+      \Serializable
+  {
+      // constants, properties, methods
+  }
+
+Given php (psr-2 abstract class implements):
+  <?php
+  namespace Vendor\Package;
+
+  use FooClass;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  abstract class ClassName extends ParentClass implements
+  \ArrayAccess,
+  \Countable,
+  \Serializable
+  {
+  // constants, properties, methods
+  }
+
+Do (indent psr-2 abstract class implements):
+  gg=G
+
+Expect php (indented psr-2 abstract class implements):
+  <?php
+  namespace Vendor\Package;
+
+  use FooClass;
+  use BarClass as Bar;
+  use OtherVendor\OtherPackage\BazClass;
+
+  abstract class ClassName extends ParentClass implements
+      \ArrayAccess,
+      \Countable,
+      \Serializable
+  {
+      // constants, properties, methods
+  }
+
+Given php (psr-2 method arguments):
+  <?php
+  namespace Vendor\Package;
+
+  class ClassName
+  {
+  public function aVeryLongMethodName(
+  ClassTypeHint $arg1,
+  &$arg2,
+  array $arg3 = []
+  ) {
+  // method body
+  }
+  }
+
+Do (indent psr-2 method arguments):
+  gg=G
+
+Expect php (indented psr-2 method arguments):
+  <?php
+  namespace Vendor\Package;
+
+  class ClassName
+  {
+      public function aVeryLongMethodName(
+          ClassTypeHint $arg1,
+          &$arg2,
+          array $arg3 = []
+      ) {
+          // method body
+      }
+  }
+
+Given php (psr-2 method call):
+  <?php
+  $foo->bar(
+  $longArgument,
+  $longerArgument,
+  $muchLongerArgument
+  );
+
+Do (indent psr-2 method call):
+  =G
+
+Expect php (indented psr-2 method call):
+  <?php
+  $foo->bar(
+      $longArgument,
+      $longerArgument,
+      $muchLongerArgument
+  );
+
+Given php (psr-2 if, elseif, else):
+  <?php
+  if ($expr1) {
+  // if body
+  } elseif ($expr2) {
+  // elseif body
+  } else {
+  // else body;
+  }
+
+Do (indent psr-2 if, elseif, else):
+  =G
+
+Expect php (indented psr-2 if, elseif, else):
+  <?php
+  if ($expr1) {
+      // if body
+  } elseif ($expr2) {
+      // elseif body
+  } else {
+      // else body;
+  }
+
+Given php (psr-2 if, elseif, else with HTML):
+  <div>
+  <?php if ($expr1) { ?>
+  <p>
+  if body
+  </p>
+  <?php } elseif ($expr2) { ?>
+  <p>// elseif body</p>
+  <?php } else { ?>
+  <p>// else body</p>
+  <?php } ?>
+  </div>
+
+Do (indent psr-2 if, elseif, else):
+  =G
+
+Expect php (indented psr-2 if, elseif, else):
+  <div>
+      <?php if ($expr1) { ?>
+          <p>
+              if body
+          </p>
+      <?php } elseif ($expr2) { ?>
+          <p>// elseif body</p>
+      <?php } else { ?>
+          <p>// else body</p>
+      <?php } ?>
+  </div>
+
+Given php (psr-2 switch, case):
+  <?php
+  switch ($expr) {
+  case 0:
+  echo 'First case, with a break';
+  break;
+  case 1:
+  echo 'Second case, which falls through';
+  // no break
+  case 2:
+  case 3:
+  case 4:
+  echo 'Third case, return instead of break';
+  return;
+  default:
+  echo 'Default case';
+  break;
+  }
+
+Do (indent psr-2 switch, case):
+  =G
+
+Expect php (indented psr-2 switch, case):
+  <?php
+  switch ($expr) {
+      case 0:
+          echo 'First case, with a break';
+          break;
+      case 1:
+          echo 'Second case, which falls through';
+          // no break
+      case 2:
+      case 3:
+      case 4:
+          echo 'Third case, return instead of break';
+          return;
+      default:
+          echo 'Default case';
+          break;
+  }
+
+Given php (psr-2 while):
+  <?php
+  while ($expr) {
+  // structure body
+  }
+
+Do (indent psr-2 while):
+  =G
+
+Expect php (indented psr-2 while):
+  <?php
+  while ($expr) {
+      // structure body
+  }
+
+Given php (psr-2 do while):
+  <?php
+  do {
+  // structure body;
+  } while ($expr);
+
+Do (indent psr-2 do while):
+  =G
+
+Expect php (indented psr-2 do while):
+  <?php
+  do {
+      // structure body;
+  } while ($expr);
+
+Given php (psr-2 while with HTML):
+  <div>
+  <?php while ($expr) { ?>
+  <p>
+  structure body
+  </p>
+  <?php } ?>
+  </div>
+
+Do (indent psr-2 while with HTML):
+  =G
+
+Expect php (indented psr-2 while with HTML):
+  <div>
+      <?php while ($expr) { ?>
+          <p>
+              structure body
+          </p>
+      <?php } ?>
+  </div>
+
+Given php (psr-2 do while with HTML):
+  <div>
+  <?php do { ?>
+  <p>
+  // structure body;
+  </p>
+  <?php } while ($expr); ?>
+  </div>
+
+Do (indent psr-2 do while with HTML):
+  =G
+
+Expect php (indented psr-2 do while with HTML):
+  <div>
+      <?php do { ?>
+          <p>
+              // structure body;
+          </p>
+      <?php } while ($expr); ?>
+  </div>
+
+Given php (psr-2 for):
+  <?php
+  for ($i = 0; $i < 10; $i++) {
+  // for body
+  }
+
+Do (indent psr-2 for):
+  =G
+
+Expect php (indented psr-2 for):
+  <?php
+  for ($i = 0; $i < 10; $i++) {
+      // for body
+  }
+
+Given php (psr-2 for with HTML):
+  <table>
+  <tbody>
+  <?php for ($i = 0; $i < 10; $i++) { ?>
+  <tr>
+  <td>for body</td>
+  </tr>
+  <?php } ?>
+  </tbody>
+  </table>
+
+Do (indent psr-2 for with HTML):
+  =G
+
+Expect php (indented psr-2 for with HTML):
+  <table>
+      <tbody>
+          <?php for ($i = 0; $i < 10; $i++) { ?>
+              <tr>
+                  <td>for body</td>
+              </tr>
+          <?php } ?>
+      </tbody>
+  </table>
+
+Given php (psr-2 foreach):
+  <?php
+  for ($i = 0; $i < 10; $i++) {
+  // for body
+  }
+
+Do (indent psr-2 foreach):
+  =G
+
+Expect php (indented psr-2 foreach):
+  <?php
+  for ($i = 0; $i < 10; $i++) {
+      // for body
+  }
+
+Given php (psr-2 try, catch):
+  <?php
+  try {
+  // try body
+  } catch (FirstExceptionType $e) {
+  // catch body
+  } catch (OtherExceptionType $e) {
+  // catch body
+  }
+
+Do (indent psr-2 try, catch):
+  =G
+
+Expect php (indented psr-2 try, catch):
+  <?php
+  try {
+      // try body
+  } catch (FirstExceptionType $e) {
+      // catch body
+  } catch (OtherExceptionType $e) {
+      // catch body
+  }
+
+Given php (psr-2 closures):
+  <?php
+  $closureWithArgs = function ($arg1, $arg2) {
+  // body
+  };
+
+  $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+  // body
+  };
+
+Do (indent psr-2 closures):
+  =G
+
+Expect php (indented psr-2 closures):
+  <?php
+  $closureWithArgs = function ($arg1, $arg2) {
+      // body
+  };
+
+  $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+      // body
+  };
+
+Given php (psr-2 closures with multi-line arguments):
+  <?php
+  $longArgs_noVars = function (
+  $longArgument,
+  $longerArgument,
+  $muchLongerArgument
+  ) {
+  // body
+  };
+
+  $noArgs_longVars = function () use (
+  $longVar1,
+  $longerVar2,
+  $muchLongerVar3
+  ) {
+  // body
+  };
+
+  $longArgs_longVars = function (
+  $longArgument,
+  $longerArgument,
+  $muchLongerArgument
+  ) use (
+  $longVar1,
+  $longerVar2,
+  $muchLongerVar3
+  ) {
+  // body
+  };
+
+  $longArgs_shortVars = function (
+  $longArgument,
+  $longerArgument,
+  $muchLongerArgument
+  ) use ($var1) {
+  // body
+  };
+
+  $shortArgs_longVars = function ($arg) use (
+  $longVar1,
+  $longerVar2,
+  $muchLongerVar3
+  ) {
+  // body
+  };
+
+Do (indent psr-2 closures with multi-line arguments):
+  =G
+
+Expect php (indent psr-2 closures with multi-line arguments):
+  <?php
+  $longArgs_noVars = function (
+      $longArgument,
+      $longerArgument,
+      $muchLongerArgument
+  ) {
+      // body
+  };
+
+  $noArgs_longVars = function () use (
+      $longVar1,
+      $longerVar2,
+      $muchLongerVar3
+  ) {
+      // body
+  };
+
+  $longArgs_longVars = function (
+      $longArgument,
+      $longerArgument,
+      $muchLongerArgument
+  ) use (
+      $longVar1,
+      $longerVar2,
+      $muchLongerVar3
+  ) {
+      // body
+  };
+
+  $longArgs_shortVars = function (
+      $longArgument,
+      $longerArgument,
+      $muchLongerArgument
+  ) use ($var1) {
+      // body
+  };
+
+  $shortArgs_longVars = function ($arg) use (
+      $longVar1,
+      $longerVar2,
+      $muchLongerVar3
+  ) {
+      // body
+  };
+
+Given php (psr-2 closure inception):
+  <?php
+  $foo->bar(
+  $arg1,
+  function ($arg2) use ($var1) {
+  // body
+  },
+  $arg3
+  );
+
+Do (indent psr-2 closure inception):
+  =G
+
+Expect php (indented psr-2 closure inception):
+  <?php
+  $foo->bar(
+      $arg1,
+      function ($arg2) use ($var1) {
+          // body
+      },
+      $arg3
+  );
+
+Given php (arrays):
+  <?php
+  $oldArray = array(
+  $one,
+  $two,
+  $three,
+  );
+
+  $newArray = [
+  $one,
+  $two,
+  $three,
+  ];
+
+Do (indent arrays):
+  =G
+
+Expect php (indented arrays):
+  <?php
+  $oldArray = array(
+      $one,
+      $two,
+      $three,
+  );
+
+  $newArray = [
+      $one,
+      $two,
+      $three,
+  ];
+
+Given php (block comment):
+  <?php
+  /**
+  * This is a comment.
+  *
+  * This is some more comment.
+  */
+  function SomeFunction() {
+  // function body
+  }
+
+  /* if ($this) { */
+      $one = 'One';
+  /* } */
+
+Do (intend block comment):
+  =G
+
+Expect php (indented block comment):
+  <?php
+  /**
+   * This is a comment.
+   *
+   * This is some more comment.
+   */
+  function SomeFunction() {
+      // function body
+  }
+
+  /* if ($this) { */
+  $one = 'One';
+  /* } */
+
