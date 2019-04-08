@@ -10,4 +10,5 @@ script: |
   set rtp^=.
   filetype plugin indent on
   syntax enable
+  set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
   VIMRC) -c 'Vader! test/*' > /dev/null
