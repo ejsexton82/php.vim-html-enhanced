@@ -1,6 +1,3 @@
-" PSR-2 configuration
-setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-
 if exists("b:did_indent")
     finish
 endif
