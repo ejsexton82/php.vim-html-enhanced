@@ -653,3 +653,22 @@ Expect php (indented block comment):
   $one = 'One';
   /* } */
 
+Given php (multi-line if):
+  if ($this
+  && $that
+  || $theOther
+  ) {
+  // If Body
+  }
+
+Do (indent multi-line if):
+  =G
+
+Expect php (indented multi-line if):
+  if ($this
+      && $that
+      || $theOther
+  ) {
+      // If Body
+  }
+
